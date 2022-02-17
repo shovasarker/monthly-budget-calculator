@@ -1,3 +1,5 @@
+let incomeValue = 0
+
 function getInputValue(inputId) {
   const input = document.getElementById(inputId)
   const inputValueText = input.value
@@ -31,7 +33,7 @@ function getDisplayedValue(displayId) {
 }
 
 function calculate() {
-  const incomeValue = getInputValue('income-input')
+  incomeValue = getInputValue('income-input')
   if (incomeValue === -1) return
 
   const foodValue = getInputValue('food-input')
@@ -53,4 +55,23 @@ function calculate() {
 
   const balance = incomeValue - totalExpenses
   displayValue('balance-display', balance)
+}
+
+function savings() {
+  const savingsValue = getInputValue('save-input')
+  if (savingsValue === -1) return
+
+  const savings = (incomeValue * savingsValue) / 100
+  console.log(savings)
+
+  const balance = getDisplayedValue('balance-display')
+  console.log(balance)
+  if (balance === -1) return
+
+  if (savings > balance) {
+    return
+  }
+  const remainingBalance = balance - savings
+  displayValue('saving-amount-display', savings)
+  displayValue('remaining-balance-display', remainingBalance)
 }
