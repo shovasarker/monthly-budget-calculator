@@ -1,4 +1,19 @@
 let incomeValue = 0
+function displayErrorMessage(message) {
+  const displayContainer = document.getElementById('error-display-container')
+  const errorDisplay = document.getElementById('error-display')
+  errorDisplay.innerText = message
+  displayContainer.classList.remove('hidden')
+  displayContainer.classList.add('flex')
+}
+
+function hideErrorDisplay() {
+  const displayContainer = document.getElementById('error-display-container')
+  if (!displayContainer.classList.contains('hidden')) {
+    displayContainer.classList.add('hidden')
+    displayContainer.classList.remove('flex')
+  }
+}
 
 function getInputValue(inputId) {
   const input = document.getElementById(inputId)
@@ -6,9 +21,14 @@ function getInputValue(inputId) {
   const inputValue = parseInt(inputValueText)
   const displayName = inputId.split('-').join(' ').toUpperCase()
   if (isNaN(inputValue)) {
+    const message = 'Please Enter a Number in the ' + displayName + ' field'
+    displayErrorMessage(message)
     return -1
   }
   if (inputValue < 0) {
+    const message =
+      'Please Enter a Positive Number in the ' + displayName + ' field'
+    displayErrorMessage(message)
     return -1
   }
   input.value = ''
@@ -25,6 +45,8 @@ function getDisplayedValue(displayId) {
   const display = document.getElementById(displayId)
   const displayValue = parseInt(display.innerText)
   if (isNaN(displayValue)) {
+    const message = 'Please Calculate Balance First!'
+    displayErrorMessage(message)
     return -1
   }
 
@@ -48,6 +70,8 @@ function calculate() {
   const totalExpenses = foodValue + rentValue + clothesValue
 
   if (totalExpenses > incomeValue) {
+    const message = "You don't have enough money for your Expenses."
+    displayErrorMessage(message)
     return
   }
 
@@ -55,6 +79,7 @@ function calculate() {
 
   const balance = incomeValue - totalExpenses
   displayValue('balance-display', balance)
+  hideErrorDisplay()
 }
 
 function savings() {
@@ -62,16 +87,16 @@ function savings() {
   if (savingsValue === -1) return
 
   const savings = (incomeValue * savingsValue) / 100
-  console.log(savings)
-
   const balance = getDisplayedValue('balance-display')
-  console.log(balance)
   if (balance === -1) return
 
   if (savings > balance) {
+    const message = "You don't have enough money for your savings."
+    displayErrorMessage(message)
     return
   }
   const remainingBalance = balance - savings
   displayValue('saving-amount-display', savings)
   displayValue('remaining-balance-display', remainingBalance)
+  hideErrorDisplay()
 }
