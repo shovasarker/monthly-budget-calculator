@@ -24,12 +24,14 @@ function getInputValue(inputId) {
   const input = document.getElementById(inputId)
   const inputValueText = input.value
   const inputValue = parseInt(inputValueText)
+  input.value = ''
   const displayName = inputId.split('-').join(' ').toUpperCase()
   // checking if input value is a number or not
   if (isNaN(inputValue)) {
     //Creating Error Message And Displaying it
     const message = 'Please Enter a Number in the ' + displayName + ' field'
     displayErrorMessage(message)
+    input.focus()
     return -1
   }
   //checking for a positive number
@@ -38,9 +40,9 @@ function getInputValue(inputId) {
     const message =
       'Please Enter a Positive Number in the ' + displayName + ' field'
     displayErrorMessage(message)
+    input.focus()
     return -1
   }
-  input.value = ''
   return inputValue
 }
 
@@ -64,7 +66,7 @@ function getDisplayedValue(displayId) {
 }
 
 // function for calculate Balance
-function calculate() {
+function calculateBalance() {
   //Getting Input Values
   incomeValue = getInputValue('income-input')
   if (incomeValue === -1) return
@@ -99,7 +101,7 @@ function calculate() {
 }
 
 //function for calculate savings
-function savings() {
+function calculateSavings() {
   //getting save-input
   const savingsValue = getInputValue('save-input')
   if (savingsValue === -1) return
@@ -116,6 +118,7 @@ function savings() {
     //Creating Error Message And Displaying it
     const message = "You don't have enough money for your savings."
     displayErrorMessage(message)
+    document.getElementById('save-input').focus()
     return
   }
 
