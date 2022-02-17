@@ -107,7 +107,7 @@ function calculateSavings() {
   if (savingsValue === -1) return
 
   //calculating savings
-  const savings = (incomeValue * savingsValue) / 100
+  const savings = Math.round((incomeValue * savingsValue) / 100)
 
   //getting balance value from balance-display
   const balance = getDisplayedValue('balance-display')
